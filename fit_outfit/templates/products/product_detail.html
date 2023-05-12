@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %}
+  {{ product.title }}
+{% endblock %}
+{% block content %}
+  <center><h1>{{ product.title }}</h1></center>
+  <br>
+  <div class="row">
+    <div class="col-4">
+      {% thumbnail product.image "400x300" padding=True as im %}
+        <img class="card-img my-2" src="{{ im.url }}" height="{{ im.height }}" width="{{ im.width }}">
+      {% endthumbnail %}
+      <br>
+      {% if request.user.is_staff %}
+      <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'products:product_edit' product.pk %}">Редактировать</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'products:product_delete' product.pk %}">Удалить</a>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+    <div class="col-8">
+      <ul>
+        <li>
+          Категория: {{ product.category }}
+        </li>
+        <li>
+          Описание: {{ product.description }}
+        </li>
+        <br>
+        {% if product.size == 'Yes' %}
+          <li>
+            Размеры:<br>
+            <div class="row">
+              <div class="col-2">
+            S - {{product.size_s}}<hr>
+            M - {{product.size_m}}<hr>
+            L - {{product.size_l}}<hr>
+            XL - {{product.size_xl}}<hr>
+            XXL - {{product.size_xxl}}<hr>
+            XXXL - {{product.size_xxxl}}<hr>
+              </div>
+              <div class="col-2">
+                <a href="{% url 'products:product_quantity' product.pk 1 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 1 2 %}"><span>&#10134</span></a><hr>
+                <a href="{% url 'products:product_quantity' product.pk 2 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 2 2 %}"><span>&#10134</span></a><hr>
+                <a href="{% url 'products:product_quantity' product.pk 3 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 3 2 %}"><span>&#10134</span></a><hr>
+                <a href="{% url 'products:product_quantity' product.pk 4 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 4 2 %}"><span>&#10134</span></a><hr>
+                <a href="{% url 'products:product_quantity' product.pk 5 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 5 2 %}"><span>&#10134</span></a><hr>
+                <a href="{% url 'products:product_quantity' product.pk 6 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 6 2 %}"><span>&#10134</span></a><hr>
+              </div>
+            </div>
+          </li>
+        {% else %}
+          <li>
+            <div class="row">
+              <div class="col-2">
+                Количество - {{product.amount}}
+              </div>
+              <div class="col-2">
+                <a href="{% url 'products:product_quantity' product.pk 7 1 %}"><span>&#10133</span></a> <a href="{% url 'products:product_quantity' product.pk 7 2 %}"><span>&#10134</span></a>
+              </div>
+            </div>
+          </li>
+        {% endif %}
+        <br>
+        {% if request.user.is_staff %}
+          <li>
+            Закупочная цена: {{ product.purchase_price }} руб.
+          </li>
+        {% endif %}
+        <li>
+          Цена: {{ product.price }} руб.
+        </li>
+        <br>
+      </ul>
+    </div>
+  </div>
+{% endblock %}

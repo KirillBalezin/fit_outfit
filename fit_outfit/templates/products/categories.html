@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Все категории{% endblock %}
+{% block content %}
+  <div class="container py-5">
+    <h1>Все категории</h1>
+    {% for category in page_obj %}
+      {% include 'products/includes/category.html'%}
+    {% endfor %}
+    {% include 'products/includes/paginator.html' %}
+  </div>
+{% endblock content %}

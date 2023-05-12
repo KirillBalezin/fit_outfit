@@ -1,0 +1,11 @@
+<article>
+  <ul>
+    <li>
+        Название: <a href="{% url 'products:category_list' category.slug %}">{{ category.title }}</a>
+    </li>
+    <li>
+      Описание: {{ category.description }}
+    </li>
+  </ul>
+</article>
+{% if not forloop.last %}<hr>{% endif %}
