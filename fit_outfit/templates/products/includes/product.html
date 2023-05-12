@@ -1,0 +1,51 @@
+{% load thumbnail %}
+<article>
+  <div class="row">
+    <div class="col-4">
+      <a href="{% url 'products:product_detail' product.pk %}">
+      {% thumbnail product.image "400x300" padding=True as im %}
+        <img class="card-img my-2" src="{{ im.url }}" height="{{ im.height }}" width="{{ im.width }}">
+      {% endthumbnail %}
+      </a>
+    </div>
+    <div class="col-8">
+      <ul>
+        <li>
+          Название: {{ product.title }}
+        </li>
+        <li>
+          Категория: {{ product.category }}
+        </li>
+        <li>
+          Описание: {{ product.description }}
+        </li>
+        <br>
+        {% if product.size == 'Yes' %}
+        <li>
+          Размеры:<br>
+          S - {{product.size_s}}<br>
+          M - {{product.size_m}}<br>
+          L - {{product.size_l}}<br>
+          XL - {{product.size_xl}}<br>
+          XXL - {{product.size_xxl}}<br>
+          XXXL - {{product.size_xxxl}}<br>
+        </li>
+        {% else %}
+          <li>
+            Количество - {{product.amount}}
+          </li>
+        <br>
+        {% endif %}
+        {% if request.user.is_staff %}
+        <li>
+          Закупочная цена: {{ product.purchase_price }} руб.
+        </li>
+        {% endif %}
+        <li>
+          Цена: {{ product.price }} руб.
+        </li>
+        <br>
+      </ul>
+    </div>
+</article>
+{% if not forloop.last %}<hr>{% endif %}
