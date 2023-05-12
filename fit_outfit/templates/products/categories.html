@@ -2,7 +2,9 @@
 {% block title %}Все категории{% endblock %}
 {% block content %}
   <div class="container py-5">
-    <h1>Все категории</h1>
+    <center>
+      <h1>Все категории</h1>
+    </center>
     {% for category in page_obj %}
       {% include 'products/includes/category.html'%}
     {% endfor %}
